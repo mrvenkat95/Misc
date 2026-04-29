@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yellowstone & Grand Teton — May 22–25</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --pine: #2D4A3E;
+    --pine-light: #3D6B5A;
+    --stone: #8B7355;
+    --cream: #F5F0E8;
+    --dark: #1A1A18;
+    --text: #2C2A24;
+    --muted: #6B6456;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--dark);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(26,26,24,0.3) 0%, rgba(26,26,24,0.15) 40%, rgba(26,26,24,0.7) 100%),
+      url('https://images.unsplash.com/photo-1690322744989-57c31768f60a?q=85&w=1600&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;
+    transform: scale(1.05);
+    animation: heroZoom 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes heroZoom {
+    from { transform: scale(1.05); }
+    to { transform: scale(1.0); }
+  }
+
+  .hero-content {
+    position: relative;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 1.25rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 1.05;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-subtitle {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 1.1rem;
+    letter-spacing: 0.12em;
+    color: rgba(245,240,232,0.75);
+    margin-top: 1rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.7s forwards;
+  }
+
+  .hero-dates {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    padding: 0.6rem 1.5rem;
+    border: 1px solid rgba(201,168,76,0.5);
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    opacity: 0;
+    animation: fadeUp 1s ease 0.9s forwards;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+    opacity: 0;
+    animation: fadeUp 1s ease 1.2s forwards;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── NAV ── */
+  .day-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(26,26,24,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 0;
+  }
+
+  .day-nav-btn {
+    padding: 1rem 2rem;
+    background: none;
+    border: none;
+    color: rgba(245,240,232,0.5);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s;
+  }
+
+  .day-nav-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+
+  .day-nav-btn.active {
+    color: var(--gold-light);
+  }
+
+  .day-nav-btn.active::after {
+    transform: scaleX(1);
+  }
+
+  /* ── DAY PANELS ── */
+  .day-section {
+    display: none;
+    min-height: 100vh;
+  }
+
+  .day-section.active {
+    display: block;
+  }
+
+  /* ── DAY HERO BANNER ── */
+  .day-banner {
+    position: relative;
+    height: 45vh;
+    min-height: 300px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .day-banner-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s ease;
+  }
+
+  .day-banner:hover .day-banner-bg {
+    transform: scale(1.03);
+  }
+
+  .day-banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(26,26,24,1) 0%, rgba(26,26,24,0.4) 60%, rgba(26,26,24,0.1) 100%);
+  }
+
+  .day-banner-content {
+    position: relative;
+    padding: 2.5rem 3rem;
+    width: 100%;
+  }
+
+  .day-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .day-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  .day-heading em { font-style: italic; color: var(--gold-light); }
+
+  .day-meta {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .day-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .day-meta-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.8;
+  }
+
+  .day-meta-value {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--cream);
+  }
+
+  /* ── MAIN CONTENT AREA ── */
+  .day-body {
+    background: var(--dark);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    min-height: 60vh;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline-col {
+    padding: 3rem;
+    border-right: 1px solid rgba(201,168,76,0.12);
+  }
+
+  .timeline-col h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 1.75rem;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .tl-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .tl-dot {
+    position: absolute;
+    left: -2rem;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--dark);
+    border: 1.5px solid var(--stone);
+    transform: translateX(-4px);
+  }
+
+  .tl-dot.gold { border-color: var(--gold); background: rgba(201,168,76,0.2); }
+  .tl-dot.food { background: rgba(201,168,76,0.15); border-color: #C9A84C; }
+  .tl-dot.sleep { background: rgba(45,74,62,0.4); border-color: var(--pine-light); }
+  .tl-dot.warn { background: rgba(180,80,50,0.2); border-color: #C05030; }
+
+  .tl-drive {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0.5rem 0 1rem;
+    padding-left: 0;
+  }
+
+  .tl-drive-line {
+    flex: 1;
+    height: 1px;
+    background: repeating-linear-gradient(to right, rgba(201,168,76,0.3) 0, rgba(201,168,76,0.3) 4px, transparent 4px, transparent 8px);
+  }
+
+  .tl-drive-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .tl-time {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-bottom: 0.2rem;
+    font-weight: 300;
+  }
+
+  .tl-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 0.2rem;
+  }
+
+  .tl-badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-bottom: 0.35rem;
+  }
+
+  .badge-sight { background: rgba(50,100,180,0.2); color: #7EB3E8; border: 1px solid rgba(50,100,180,0.3); }
+  .badge-food { background: rgba(201,168,76,0.15); color: var(--gold-light); border: 1px solid rgba(201,168,76,0.3); }
+  .badge-drive { background: rgba(100,100,100,0.2); color: #AAA; border: 1px solid rgba(100,100,100,0.3); }
+  .badge-sleep { background: rgba(45,74,62,0.3); color: #7DB89A; border: 1px solid rgba(45,74,62,0.5); }
+  .badge-tram { background: rgba(45,130,80,0.2); color: #7DD4A0; border: 1px solid rgba(45,130,80,0.3); }
+  .badge-golden { background: rgba(201,130,40,0.15); color: #E8B86A; border: 1px solid rgba(201,130,40,0.3); }
+  .badge-warn { background: rgba(180,80,50,0.15); color: #E09070; border: 1px solid rgba(180,80,50,0.3); }
+
+  .tl-detail {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: rgba(245,240,232,0.6);
+    line-height: 1.6;
+  }
+
+  /* ── MAP & PHOTOS COL ── */
+  .map-col { display: flex; flex-direction: column; }
+
+  /* SVG Route Map */
+  .route-map-wrap {
+    padding: 2rem 2rem 1.25rem;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+  .route-map-wrap h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.25rem;
+  }
+  .route-svg { width: 100%; height: auto; display: block; }
+
+  /* Photo section */
+  .photo-section { padding: 1.25rem 2rem 2rem; }
+  .photo-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  /* ── PHOTO GRID ── */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .photo-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+
+  .photo-card.wide { grid-column: span 2; }
+
+  .photo-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-card.wide img { height: 200px; }
+
+  .photo-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .photo-card:hover img {
+    transform: scale(1.06);
+  }
+
+  .photo-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.6rem 0.75rem;
+    background: linear-gradient(to top, rgba(26,26,24,0.9), transparent);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: rgba(245,240,232,0.85);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .photo-card:hover .photo-caption {
+    transform: translateY(0);
+  }
+
+  /* ── ALERT / INFO BANNERS ── */
+  .alert-banner {
+    margin: 1.5rem 3rem;
+    padding: 0.9rem 1.25rem;
+    border-left: 2px solid #C05030;
+    background: rgba(180,80,50,0.08);
+    font-size: 0.8rem;
+    color: rgba(245,240,232,0.75);
+    line-height: 1.6;
+  }
+
+  .info-banner {
+    margin: 1.5rem 3rem;
+    padding: 0.9rem 1.25rem;
+    border-left: 2px solid var(--pine-light);
+    background: rgba(45,74,62,0.12);
+    font-size: 0.8rem;
+    color: rgba(245,240,232,0.75);
+    line-height: 1.6;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 3rem;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox.open {
+    display: flex;
+  }
+
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    font-size: 1.5rem;
+    color: var(--cream);
+    cursor: pointer;
+    background: none;
+    border: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .lightbox-close:hover { opacity: 1; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .day-body {
+      grid-template-columns: 1fr;
+    }
+    .timeline-col {
+      border-right: none;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+    .day-nav-btn {
+      padding: 0.75rem 1rem;
+      font-size: 0.65rem;
+    }
+    .day-banner-content { padding: 1.5rem; }
+    .timeline-col { padding: 2rem 1.5rem; }
+    .alert-banner, .info-banner { margin: 1rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">A Journey Through the American West</p>
+    <h1 class="hero-title">Yellowstone<br>&amp; <em>Grand Teton</em></h1>
+    <div class="hero-dates">May 22 &mdash; May 25, 2026</div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- STICKY NAV -->
+<nav class="day-nav">
+  <button class="day-nav-btn active" onclick="showDay(0)">May 22</button>
+  <button class="day-nav-btn" onclick="showDay(1)">May 23</button>
+  <button class="day-nav-btn" onclick="showDay(2)">May 24</button>
+  <button class="day-nav-btn" onclick="showDay(3)">May 25</button>
+</nav>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- DAY 1 -->
+<!-- ══════════════════════════════════════════ -->
+<section class="day-section active" id="day-0">
+  <div class="day-banner">
+    <div class="day-banner-bg" style="background-image: url('https://images.unsplash.com/photo-1728356165785-2c1a6b45f29c?q=80&w=2075&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+    <div class="day-banner-overlay"></div>
+    <div class="day-banner-content">
+      <p class="day-label">Day 1 · Friday, May 22</p>
+      <h2 class="day-heading">Aerial Tram · Jackson &amp; <em>Teton Golden Hour</em></h2>
+      <div class="day-meta">
+        <div class="day-meta-item"><span class="day-meta-label">Drive</span><span class="day-meta-value">~1.5 hrs total</span></div>
+        <div class="day-meta-item"><span class="day-meta-label">Sunset</span><span class="day-meta-value">~8:35 PM</span></div>
+        <div class="day-meta-item"><span class="day-meta-label">Sleep</span><span class="day-meta-value">Jackson Lake Lodge</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-banner">
+    Book tram tickets in advance at jacksonhole.com — the 4:30 PM slot sells out on May weekends. Reserve dinner at Jackson Lake Lodge Mural Room at gtlc.com.
+  </div>
+
+  <div class="day-body">
+    <div class="timeline-col">
+      <h3>Schedule</h3>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-dot gold"></div>
+          <div class="tl-time">4:30 – 5:30 PM</div>
+          <div class="tl-name">Jackson Hole Aerial Tram</div>
+          <span class="tl-badge badge-tram">1 hr</span>
+          <div class="tl-detail">Drive straight to Teton Village on arrival. Up to Rendezvous Mountain (10,450 ft) in ~12 min. Panoramic views of Jackson Hole valley and the Tetons. Summit is 15–20°F cooler — bring a layer.</div>
+        </div>
+
+        <div class="tl-drive">
+          <div class="tl-drive-line"></div>
+          <span class="tl-drive-label">~20 min east to Jackson</span>
+          <div class="tl-drive-line"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-time">5:50 – 6:30 PM</div>
+          <div class="tl-name">Jackson Town Square</div>
+          <span class="tl-badge badge-sight">~40 min</span>
+          <div class="tl-detail">Elk antler arches, browse the shops, stretch your legs. First taste of the western vibe before heading into the parks.</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot food"></div>
+          <div class="tl-time">6:30 – 7:30 PM</div>
+          <div class="tl-name">Dinner in Jackson</div>
+          <span class="tl-badge badge-food">1 hr</span>
+          <div class="tl-detail">Café Genevieve or Town Square Tavern. Sit-down dinner — you have time before the drive north.</div>
+        </div>
+
+        <div class="tl-drive">
+          <div class="tl-drive-line"></div>
+          <span class="tl-drive-label">~1 hr north through Grand Teton NP</span>
+          <div class="tl-drive-line"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot gold"></div>
+          <div class="tl-time">~8:30 PM</div>
+          <div class="tl-name">Oxbow Bend — last light</div>
+          <span class="tl-badge badge-golden">optional stop</span>
+          <div class="tl-detail">Catch the last pink glow on the Tetons above the glassy water. Even a 5-min stop is worth it. If you'd rather not rush, Oxbow Bend is 2 min from the lodge — hit it fresh tomorrow morning.</div>
+        </div>
+
+        <div class="tl-drive">
+          <div class="tl-drive-line"></div>
+          <span class="tl-drive-label">~2 min</span>
+          <div class="tl-drive-line"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot sleep"></div>
+          <div class="tl-time">~8:45 PM</div>
+          <div class="tl-name">Jackson Lake Lodge</div>
+          <span class="tl-badge badge-sleep">overnight</span>
+          <div class="tl-detail">Inside Grand Teton National Park. Walk through the main lobby for the iconic floor-to-ceiling Teton view before bed. Coffee cart opens at 6 AM.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="map-col">
+      <div class="route-map-wrap">
+        <h3>Day 1 Route</h3>
+        <svg class="route-svg" viewBox="0 0 460 220" xmlns="http://www.w3.org/2000/svg">
+          <defs><marker id="arr1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="rgba(201,168,76,0.7)"/></marker></defs>
+          <path d="M60,160 L130,160 Q150,160 160,140 L200,80 Q210,60 240,55 L310,50 Q360,50 400,60" stroke="rgba(201,168,76,0.35)" stroke-width="1.5" fill="none" stroke-dasharray="6,4" marker-end="url(#arr1)"/>
+          <!-- Teton Village -->
+          <circle cx="60" cy="160" r="7" fill="rgba(45,130,80,0.3)" stroke="#7DD4A0" stroke-width="1.5"/>
+          <text x="60" y="178" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="9" font-family="Jost,sans-serif">Teton Village</text>
+          <text x="60" y="188" text-anchor="middle" fill="rgba(201,168,76,0.8)" font-size="8" font-family="Jost,sans-serif">Arrive 4:30 PM</text>
+          <!-- Jackson Town -->
+          <circle cx="130" cy="160" r="7" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.7)" stroke-width="1.5"/>
+          <text x="130" y="178" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="9" font-family="Jost,sans-serif">Jackson</text>
+          <text x="130" y="188" text-anchor="middle" fill="rgba(201,168,76,0.8)" font-size="8" font-family="Jost,sans-serif">5:50 PM</text>
+          <!-- Snake River Overlook -->
+          <circle cx="200" cy="80" r="6" fill="rgba(201,100,40,0.2)" stroke="#E8B86A" stroke-width="1.5"/>
+          <text x="200" y="67" text-anchor="middle" fill="rgba(245,240,232,0.65)" font-size="8.5" font-family="Jost,sans-serif">Snake River</text>
+          <text x="200" y="57" text-anchor="middle" fill="rgba(245,240,232,0.65)" font-size="8.5" font-family="Jost,sans-serif">Overlook</text>
+          <!-- Oxbow Bend -->
+          <circle cx="310" cy="50" r="6" fill="rgba(201,100,40,0.2)" stroke="#E8B86A" stroke-width="1.5"/>
+          <text x="310" y="37" text-anchor="middle" fill="rgba(245,240,232,0.65)" font-size="8.5" font-family="Jost,sans-serif">Oxbow Bend</text>
+          <text x="310" y="27" text-anchor="middle" fill="rgba(201,168,76,0.8)" font-size="8" font-family="Jost,sans-serif">~8:30 PM</text>
+          <!-- Jackson Lake Lodge -->
+          <circle cx="400" cy="60" r="8" fill="rgba(45,74,62,0.4)" stroke="#7DB89A" stroke-width="2"/>
+          <text x="400" y="46" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="8.5" font-family="Jost,sans-serif">Jackson Lake</text>
+          <text x="400" y="36" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="8.5" font-family="Jost,sans-serif">Lodge</text>
+          <text x="400" y="78" text-anchor="middle" fill="rgba(201,168,76,0.8)" font-size="8" font-family="Jost,sans-serif">8:45 PM ὎2 sleep</text>
+          <!-- dist labels -->
+          <text x="95" y="152" text-anchor="middle" fill="rgba(201,168,76,0.45)" font-size="7.5" font-family="Jost,sans-serif">20 min</text>
+          <text x="165" y="118" text-anchor="middle" fill="rgba(201,168,76,0.45)" font-size="7.5" font-family="Jost,sans-serif" transform="rotate(-30,165,118)">45 min north</text>
+          <!-- legend -->
+          <circle cx="20" cy="207" r="4" fill="rgba(45,130,80,0.3)" stroke="#7DD4A0" stroke-width="1.5"/><text x="30" y="211" fill="rgba(245,240,232,0.4)" font-size="8" font-family="Jost,sans-serif">Arrive</text>
+          <circle cx="90" cy="207" r="4" fill="rgba(45,74,62,0.4)" stroke="#7DB89A" stroke-width="1.5"/><text x="100" y="211" fill="rgba(245,240,232,0.4)" font-size="8" font-family="Jost,sans-serif">Sleep</text>
+          <circle cx="155" cy="207" r="4" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.7)" stroke-width="1.5"/><text x="165" y="211" fill="rgba(245,240,232,0.4)" font-size="8" font-family="Jost,sans-serif">Town/Meal</text>
+          <circle cx="240" cy="207" r="4" fill="rgba(201,100,40,0.2)" stroke="#E8B86A" stroke-width="1.5"/><text x="250" y="211" fill="rgba(245,240,232,0.4)" font-size="8" font-family="Jost,sans-serif">Scenic stop</text>
+        </svg>
+      </div>
+      <div class="photo-section">
+        <h3>Highlights</h3>
+        <div class="photo-grid">
+          <div class="photo-card wide" onclick="openLightbox(this)">
+            <img src="https://images.unsplash.com/photo-1673903070027-ef7521c5c541?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Grand Teton Snake River Overlook" loading="lazy">
+            <div class="photo-caption">Snake River Overlook — Grand Teton National Park</div>
+          </div>
+          <div class="photo-card" onclick="openLightbox(this)">
+            <img src="https://images.unsplash.com/photo-1612981496404-c34c7e8cbbbf?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Jackson Hole Aerial Tram" loading="lazy">
+            <div class="photo-caption">Oxbow Bend — golden hour</div>
+          </div>
+          <div class="photo-card" onclick="openLightbox(this)">
+            <img src="https://images.unsplash.com/photo-1730161098525-5724bb214181?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Oxbow Bend wildlife golden hour" loading="lazy">
+            <div class="photo-caption">Downtown Jackson</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- DAY 2 -->
+<!-- ══════════════════════════════════════════ -->
+<section class="day-section" id="day-1">
+  <div class="day-banner">
+    <div class="day-banner-bg" style="background-image: url('https://images.unsplash.com/photo-1669525541864-f12f75d7a578?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+    <div class="day-banner-overlay"></div>
+    <div class="day-banner-content">
+      <p class="day-label">Day 2 · Saturday, May 23</p>
+      <h2 class="day-heading">Grand Teton · <em>Into Yellowstone</em></h2>
+      <div class="day-meta">
+        <div class="day-meta-item"><span class="day-meta-label">Start</span><span class="day-meta-value">8:00 AM</span></div>
+        <div class="day-meta-item"><span class="day-meta-label">Drive</span><span class="day-meta-value">~4 hrs total</span></div>
+        <div class="day-meta-item"><span class="day-meta-label">Sunset</span><span class="day-meta-value">~8:35 PM</span></div>
+        <div class="day-meta-item"><span class="day-meta-label">Sleep</span><span class="day-meta-value">Three Bear Lodge, West Yellowstone</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-banner">
+    Grand Prismatic is more vivid in evening light — steam settles and colors pop. Jenny Lake boat shuttle lines build fast on weekends — get there by 9:30 AM at the latest.
+  </div>
+
+  <div class="day-body">
+    <div class="timeline-col">
+      <h3>Schedule</h3>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-dot food"></div>
+          <div class="tl-time">8:00 – 8:15 AM</div>
+          <div class="tl-name">Quick bites + coffee</div>
+          <span class="tl-badge badge-food">15 min</span>
+          <div class="tl-detail">Jackson Lake Lodge coffee cart from 6 AM. Grab coffee and eat packed snacks in the car.</div>
+        </div>
+
+        <div class="tl-drive">
+          <div class="tl-drive-line"></div>
+          <span class="tl-drive-label">~2 min south</span>
+          <div class="tl-drive-line"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-time">8:15 – 9:00 AM</div>
+          <div class="tl-name">Oxbow Bend</div>
+          <span class="tl-badge badge-sight">~45 min</span>
+          <div class="tl-detail">Morning mist and wildlife — moose, eagles, bison. If you caught it last night, spend 15–20 min here and head to Jenny Lake earlier.</div>
+        </div>
+
+        <div class="tl-drive">
+          <div class="tl-drive-line"></div>
+          <span class="tl-drive-label">~25 min south to Jenny Lake</span>
+          <div class="tl-drive-line"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-time">9:25 – 11:50 AM</div>
+          <div class="tl-name">Jenny Lake</div>
+          <span class="tl-badge badge-sight">~2.5 hrs</span>
+          <div class="tl-detail">Arrive early — weekend shuttle lines build by 10 AM. Boat shuttle across (~15 min), hike to Hidden Falls (0.5 mi), push to Inspiration Point (+0.5 mi steep).</div>
+        </div>
+
+        <div class="tl-drive">
+          <div class="tl-drive-line"></div>
+          <span class="tl-drive-label">~20 min south toward Moose Junction</span>
+          <div class="tl-drive-line"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot food"></div>
+          <div class="tl-time">12:10 – 1:10 PM</div>
+          <div class="tl-name">Lunch — Moose Junction</div>
+          <span class="tl-badge badge-food">1 hr</span>
+          <div class="tl-detail">Moose Trading Post for grab-and-go sandwiches, or push 15 min to Jackson for Persephone Bakery or Gather. Last proper food before Yellowstone.</div>
+        </div>
+
+        <div class="tl-drive">
+          <div class="tl-drive-line"></div>
+          <span class="tl-drive-label">~40 min to South Entrance (open since May 8)</span>
+          <div class="tl-drive-line"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-time">1:50 – 3:05 PM</div>
+          <div class="tl-name">South Entrance → Old Faithful</div>
+          <span class="tl-badge badge-drive">~1 hr 15 min drive</span>
+          <div class="tl-detail">Through Lewis Canyon and past Shoshone Lake. West Thumb Geyser Basin is a quick optional stop en route (~20 min).</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-time">3:05 – 4:05 PM</div>
+          <div class="tl-name">Old Faithful</div>
+          <span class="tl-badge badge-sight">~1 hr</span>
+          <div class="tl-detail">Erupts every 60–110 min. Check the NPS app prediction on arrival. Walk the upper geyser basin boardwalk while waiting.</div>
+        </div>
+
+        <div class="tl-drive">
+          <div class="tl-drive-line"></div>
+          <span class="tl-drive-label">~5 min drive</span>
+          <div class="tl-drive-line"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot gold"></div>
+          <div class="tl-time">4:20 – 6:20 PM</div>
+          <div class="tl-name">Grand Prismatic Spring + Overlook</div>
+          <span class="tl-badge badge-golden">~2 hrs — evening light</span>
+          <div class="tl-detail">Boardwalk loop (~30 min), then Fairy Falls trailhead → 0.8 mi to overlook (~45 min round trip). Evening light makes the rainbow rings glow.</div>
+        </div>
+
+        <div class="tl-drive">
+          <div class="tl-drive-line"></div>
+          <span class="tl-drive-label">~5 min</span>
+          <div class="tl-drive-line"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot food"></div>
+          <div class="tl-time">6:30 – 7:15 PM</div>
+          <div class="tl-name">Dinner — Old Faithful Inn</div>
+          <span class="tl-badge badge-food">~45 min · reserve ahead</span>
+          <div class="tl-detail">Iconic log lodge dining room. Book in advance at yellowstonenationalparklodges.com — Memorial Day weekend fills fast.</div>
+        </div>
+
+        <div class="tl-drive">
+          <div class="tl-drive-line"></div>
+          <span class="tl-drive-label">~30 min to West Entrance</span>
+          <div class="tl-drive-line"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot sleep"></div>
+          <div class="tl-time">~7:45 PM</div>
+          <div class="tl-name">Three Bear Lodge, West Yellowstone</div>
+          <span class="tl-badge badge-sleep">overnight</span>
+          <div class="tl-detail">On-site restaurant and breakfast buffet — perfect for a quick start tomorrow. Hot tub for tired legs after a big day.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="map-col">
+      <div class="route-map-wrap">
+        <h3>Day 2 Route</h3>
+        <svg class="route-svg" viewBox="0 0 460 230" xmlns="http://www.w3.org/2000/svg">
+          <defs><marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="rgba(201,168,76,0.7)"/></marker></defs>
+          <path d="M30,80 L80,92 L140,112 L190,126 L240,114 Q268,106 288,90 L328,70 L378,64 L426,68" stroke="rgba(201,168,76,0.35)" stroke-width="1.5" fill="none" stroke-dasharray="6,4" marker-end="url(#arr2)"/>
+          <!-- Jackson Lake Lodge (sleep start) -->
+          <circle cx="30" cy="80" r="7" fill="rgba(45,74,62,0.4)" stroke="#7DB89A" stroke-width="1.5"/>
+          <text x="30" y="65" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="8" font-family="Jost,sans-serif">Jackson Lake</text>
+          <text x="30" y="55" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="8" font-family="Jost,sans-serif">Lodge</text>
+          <text x="30" y="96" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7.5" font-family="Jost,sans-serif">8 AM</text>
+          <!-- Oxbow Bend -->
+          <circle cx="80" cy="92" r="5" fill="rgba(201,100,40,0.2)" stroke="#E8B86A" stroke-width="1.5"/>
+          <text x="80" y="110" text-anchor="middle" fill="rgba(245,240,232,0.6)" font-size="7.5" font-family="Jost,sans-serif">Oxbow Bend</text>
+          <!-- Jenny Lake -->
+          <circle cx="140" cy="112" r="7" fill="rgba(50,100,180,0.2)" stroke="#7EB3E8" stroke-width="1.5"/>
+          <text x="140" y="130" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="8" font-family="Jost,sans-serif">Jenny Lake</text>
+          <text x="140" y="140" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7.5" font-family="Jost,sans-serif">9:30 AM</text>
+          <!-- Moose / Lunch -->
+          <circle cx="190" cy="126" r="5" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.55)" stroke-width="1.5"/>
+          <text x="190" y="143" text-anchor="middle" fill="rgba(245,240,232,0.5)" font-size="7.5" font-family="Jost,sans-serif">Lunch · Moose</text>
+          <text x="230" y="150" text-anchor="middle" fill="rgba(201,168,76,0.35)" font-size="7" font-family="Jost,sans-serif">South Entrance → YNP</text>
+          <!-- Old Faithful -->
+          <circle cx="288" cy="90" r="7" fill="rgba(50,100,180,0.2)" stroke="#7EB3E8" stroke-width="1.5"/>
+          <text x="288" y="76" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="8" font-family="Jost,sans-serif">Old Faithful</text>
+          <text x="288" y="108" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7.5" font-family="Jost,sans-serif">3 PM</text>
+          <!-- Grand Prismatic -->
+          <circle cx="328" cy="70" r="7" fill="rgba(201,100,40,0.22)" stroke="#E8B86A" stroke-width="1.5"/>
+          <text x="328" y="56" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="8" font-family="Jost,sans-serif">Grand Prismatic</text>
+          <text x="328" y="88" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7.5" font-family="Jost,sans-serif">4:20 PM</text>
+          <!-- Three Bear Lodge (sleep) -->
+          <circle cx="426" cy="68" r="8" fill="rgba(45,74,62,0.4)" stroke="#7DB89A" stroke-width="2"/>
+          <text x="426" y="53" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="8" font-family="Jost,sans-serif">Three Bear</text>
+          <text x="426" y="43" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="8" font-family="Jost,sans-serif">Lodge</text>
+          <text x="426" y="85" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7.5" font-family="Jost,sans-serif">7:45 PM</text>
+          <!-- legend -->
+          <circle cx="20" cy="215" r="4" fill="rgba(50,100,180,0.2)" stroke="#7EB3E8" stroke-width="1.5"/><text x="30" y="219" fill="rgba(245,240,232,0.4)" font-size="8" font-family="Jost,sans-serif">Sightseeing</text>
+          <circle cx="115" cy="215" r="4" fill="rgba(201,100,40,0.22)" stroke="#E8B86A" stroke-width="1.5"/><text x="125" y="219" fill="rgba(245,240,232,0.4)" font-size="8" font-family="Jost,sans-serif">Golden hr stop</text>
+          <circle cx="230" cy="215" r="4" fill="rgba(45,74,62,0.4)" stroke="#7DB89A" stroke-width="1.5"/><text x="240" y="219" fill="rgba(245,240,232,0.4)" font-size="8" font-family="Jost,sans-serif">Sleep</text>
+        </svg>
+      </div>
+      <div class="photo-section">
+        <h3>Highlights</h3>
+        <div class="photo-grid">
+          <div class="photo-card" onclick="openLightbox(this)">
+            <img src="https://images.unsplash.com/photo-1606015410126-b6f3e5f50df5?q=80&w=1081&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Jenny Lake Grand Teton" loading="lazy">
+            <div class="photo-caption">Jenny Lake — Grand Teton NP</div>
+          </div>
+          <div class="photo-card" onclick="openLightbox(this)">
+            <img src="https://images.unsplash.com/photo-1754878302051-6087c8d632bf?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Old Faithful eruption" loading="lazy">
+            <div class="photo-caption">Old Faithful — eruption</div>
+          </div>
+          <div class="photo-card wide" onclick="openLightbox(this)">
+            <img src="https://images.unsplash.com/photo-1759267115917-bf817789a331?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Grand Prismatic Spring colorful" loading="lazy">
+            <div class="photo-caption">Grand Prismatic Spring — rainbow rings from the overlook</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- DAY 3 -->
+<!-- ══════════════════════════════════════════ -->
+<section class="day-section" id="day-2">
+  <div class="day-banner">
+    <div class="day-banner-bg" style="background-image: url('https://images.unsplash.com/photo-1712255690929-694335c17686?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+    <div class="day-banner-overlay"></div>
+    <div class="day-banner-content">
+      <p class="day-label">Day 3 · Sunday, May 24</p>
+      <h2 class="day-heading">Grand Canyon of Yellowstone · <em>Lamar Valley Sunset</em></h2>
+      <div class="day-meta">
+        <div class="day-meta-item"><span class="day-meta-label">Start</span><span class="day-meta-value">8:00 AM</span></div>
+        <div class="day-meta-item"><span class="day-meta-label">Drive</span><span class="day-meta-value">~4.5 hrs total</span></div>
+        <div class="day-meta-item"><span class="day-meta-label">Sunset</span><span class="day-meta-value">~8:35 PM</span></div>
+        <div class="day-meta-item"><span class="day-meta-label">Sleep</span><span class="day-meta-value">Antler Lodge, Gardiner MT</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-banner">
+    Today: Grand Canyon of the Yellowstone first (morning from West Yellowstone), then east to Lamar Valley for the long golden-hour wildlife session, then back west through Mammoth to Gardiner and Antler Lodge. Lamar is the trip highlight — wolves and grizzlies peak at dusk. Stay all the way to ~8:35 PM.
+  </div>
+
+  <div class="day-body">
+    <div class="timeline-col">
+      <h3>Schedule</h3>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-dot food"></div>
+          <div class="tl-time">8:00 – 8:15 AM</div>
+          <div class="tl-name">Quick bites + coffee</div>
+          <span class="tl-badge badge-food">15 min</span>
+          <div class="tl-detail">Three Bear Lodge breakfast buffet — grab a quick plate and coffee. Pack snacks for the Lamar Valley stretch tonight.</div>
+        </div>
+
+        <div class="tl-drive">
+          <div class="tl-drive-line"></div>
+          <span class="tl-drive-label">~1 hr 15 min east via Madison → Norris → Canyon Village</span>
+          <div class="tl-drive-line"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot gold"></div>
+          <div class="tl-time">9:30 – 11:15 AM</div>
+          <div class="tl-name">Grand Canyon of the Yellowstone</div>
+          <span class="tl-badge badge-golden">~1.75 hrs · must-do</span>
+          <div class="tl-detail">South Rim first — Artist Point for the iconic canyon + Lower Falls panorama (~30 min, absolutely do not skip). Then North Rim: Lookout Point + Inspiration Point for the different angle down into the canyon (~30 min). The rhyolite canyon walls glow yellow and orange in morning light.</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot food"></div>
+          <div class="tl-time">11:30 AM – 12:15 PM</div>
+          <div class="tl-name">Lunch — Canyon Village</div>
+          <span class="tl-badge badge-food">~45 min</span>
+          <div class="tl-detail">Canyon Lodge Cafeteria or Canyon General Store deli. Quick fuel stop before the long drive east to Lamar.</div>
+        </div>
+
+        <div class="tl-drive">
+          <div class="tl-drive-line"></div>
+          <span class="tl-drive-label">~1 hr east via Tower-Roosevelt Junction → Lamar Valley</span>
+          <div class="tl-drive-line"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot gold"></div>
+          <div class="tl-time">1:15 – 8:35 PM</div>
+          <div class="tl-name">Lamar Valley — afternoon into sunset</div>
+          <span class="tl-badge badge-golden">~7 hrs · bring binoculars</span>
+          <div class="tl-detail">Drive the full valley to Soda Butte and back. Park at pullouts and scan the hillsides. Bison herds are a given — grizzlies, wolves, and pronghorn peak at golden hour. The Lamar Canyon wolf pack has been active this spring. Stay all the way through sunset ~8:35 PM — this is the trip's single best wildlife window. Don't leave early.</div>
+        </div>
+
+        <div class="tl-drive">
+          <div class="tl-drive-line"></div>
+          <span class="tl-drive-label">~45 min back west — Lamar → Tower → Mammoth → North Entrance → Gardiner</span>
+          <div class="tl-drive-line"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot food"></div>
+          <div class="tl-time">~9:20 PM</div>
+          <div class="tl-name">Dinner in Gardiner</div>
+          <span class="tl-badge badge-food">~1 hr</span>
+          <div class="tl-detail">Rustler's Roost or Iron Horse Bar &amp; Grill — both walkable from Antler Lodge. Check hours in advance; Gardiner restaurants close early on weeknights.</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot sleep"></div>
+          <div class="tl-time">~10:30 PM</div>
+          <div class="tl-name">Antler Lodge, Gardiner</div>
+          <span class="tl-badge badge-sleep">overnight</span>
+          <div class="tl-detail">Right at the North Entrance of Yellowstone, 5 miles from Mammoth. Perfect jumping-off point for Mammoth first thing tomorrow before the drive to Bozeman.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="map-col">
+      <div class="route-map-wrap">
+        <h3>Day 3 Route</h3>
+        <svg class="route-svg" viewBox="0 0 460 220" xmlns="http://www.w3.org/2000/svg">
+          <defs><marker id="arr3" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="rgba(201,168,76,0.7)"/></marker></defs>
+          <!-- Main route: W.Yellowstone → Canyon Village → Lamar Valley -->
+          <path d="M30,165 Q80,155 130,140 Q175,125 230,112 L340,72" stroke="rgba(201,168,76,0.35)" stroke-width="1.5" fill="none" stroke-dasharray="6,4" marker-end="url(#arr3)"/>
+          <!-- Return route: Lamar → Tower → Mammoth → Gardiner (lighter dashed) -->
+          <path d="M340,72 Q310,78 280,82 Q210,90 155,62 Q130,50 110,30" stroke="rgba(201,168,76,0.18)" stroke-width="1" fill="none" stroke-dasharray="4,5"/>
+          <!-- West Yellowstone (start) -->
+          <circle cx="30" cy="165" r="7" fill="rgba(45,74,62,0.35)" stroke="#7DB89A" stroke-width="1.5"/>
+          <text x="30" y="181" text-anchor="middle" fill="rgba(245,240,232,0.65)" font-size="8" font-family="Jost,sans-serif">W. Yellowstone</text>
+          <text x="30" y="191" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7.5" font-family="Jost,sans-serif">8 AM</text>
+          <!-- Canyon Village -->
+          <circle cx="230" cy="112" r="7" fill="rgba(50,100,180,0.2)" stroke="#7EB3E8" stroke-width="1.5"/>
+          <text x="230" y="98" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="8" font-family="Jost,sans-serif">Canyon Village</text>
+          <text x="230" y="88" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7.5" font-family="Jost,sans-serif">9:30 AM</text>
+          <text x="230" y="130" text-anchor="middle" fill="rgba(245,240,232,0.45)" font-size="7" font-family="Jost,sans-serif">Artist Point</text>
+          <!-- Lamar Valley (HIGHLIGHT) -->
+          <circle cx="340" cy="72" r="10" fill="rgba(201,100,40,0.25)" stroke="#E8B86A" stroke-width="2"/>
+          <text x="340" y="57" text-anchor="middle" fill="rgba(245,240,232,0.85)" font-size="9" font-weight="500" font-family="Jost,sans-serif">Lamar Valley</text>
+          <text x="340" y="47" text-anchor="middle" fill="rgba(245,240,232,0.85)" font-size="9" font-weight="500" font-family="Jost,sans-serif">★ HIGHLIGHT</text>
+          <text x="340" y="90" text-anchor="middle" fill="rgba(201,168,76,0.8)" font-size="7.5" font-family="Jost,sans-serif">3 PM – sunset</text>
+          <!-- Mammoth (return path label) -->
+          <circle cx="155" cy="62" r="5" fill="rgba(50,100,180,0.18)" stroke="rgba(100,160,220,0.5)" stroke-width="1"/>
+          <text x="155" y="50" text-anchor="middle" fill="rgba(245,240,232,0.4)" font-size="7.5" font-family="Jost,sans-serif">Mammoth</text>
+          <!-- Gardiner (sleep) -->
+          <circle cx="110" cy="30" r="8" fill="rgba(45,74,62,0.4)" stroke="#7DB89A" stroke-width="2"/>
+          <text x="110" y="16" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="8" font-family="Jost,sans-serif">Antler Lodge</text>
+          <text x="110" y="7" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="8" font-family="Jost,sans-serif">Gardiner</text>
+          <text x="156" y="207" fill="rgba(201,168,76,0.35)" font-size="7" font-family="Jost,sans-serif">← return via Mammoth</text>
+          <!-- legend -->
+          <circle cx="20" cy="207" r="4" fill="rgba(50,100,180,0.2)" stroke="#7EB3E8" stroke-width="1.5"/><text x="30" y="211" fill="rgba(245,240,232,0.4)" font-size="8" font-family="Jost,sans-serif">Sightseeing</text>
+          <circle cx="120" cy="207" r="4" fill="rgba(201,100,40,0.25)" stroke="#E8B86A" stroke-width="1.5"/><text x="130" y="211" fill="rgba(245,240,232,0.4)" font-size="8" font-family="Jost,sans-serif">Highlight</text>
+          <circle cx="210" cy="207" r="4" fill="rgba(45,74,62,0.4)" stroke="#7DB89A" stroke-width="1.5"/><text x="220" y="211" fill="rgba(245,240,232,0.4)" font-size="8" font-family="Jost,sans-serif">Sleep</text>
+        </svg>
+      </div>
+      <div class="photo-section">
+        <h3>Highlights</h3>
+        <div class="photo-grid">
+          <div class="photo-card wide" onclick="openLightbox(this)">
+            <img src="https://images.unsplash.com/photo-1754956043448-f409be3393fc?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Lamar Valley bison at golden hour" loading="lazy">
+            <div class="photo-caption">Lamar Valley — bison herd at golden hour</div>
+          </div>
+          <div class="photo-card" onclick="openLightbox(this)">
+            <img src="https://images.unsplash.com/photo-1671835539940-4b38b52d1d0a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Grand Canyon of the Yellowstone" loading="lazy">
+            <div class="photo-caption">Grand Canyon of the Yellowstone — Artist Point</div>
+          </div>
+          <div class="photo-card" onclick="openLightbox(this)">
+            <img src="https://images.unsplash.com/photo-1709853291157-481670038a9a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Yellowstone thermal pools" loading="lazy">
+            <div class="photo-caption">Yellowstone — Canyon area thermal features</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- DAY 4 -->
+<!-- ══════════════════════════════════════════ -->
+<section class="day-section" id="day-3">
+  <div class="day-banner">
+    <div class="day-banner-bg" style="background-image: url('https://images.unsplash.com/photo-1754956043225-853174cedc23?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+    <div class="day-banner-overlay"></div>
+    <div class="day-banner-content">
+      <p class="day-label">Day 4 · Monday, May 25</p>
+      <h2 class="day-heading">Mammoth Hot Springs · <em>Fly Home from Bozeman</em></h2>
+      <div class="day-meta">
+        <div class="day-meta-item"><span class="day-meta-label">Start</span><span class="day-meta-value">8:00 AM</span></div>
+        <div class="day-meta-item"><span class="day-meta-label">Depart Gardiner</span><span class="day-meta-value">12:30 PM hard cutoff</span></div>
+        <div class="day-meta-item"><span class="day-meta-label">Flight</span><span class="day-meta-value">4:29 PM BZN (Bozeman)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert-banner">
+    ⚠ Flight is 4:29 PM from Bozeman (BZN) — arrive airport by 3:15 PM. Drive from Gardiner to Bozeman is ~1 hr 20 min through Livingston. Leave Gardiner by 12:30 PM sharp. No sit-down lunch — pack snacks the night before and eat on the road north.
+  </div>
+
+  <div class="day-body">
+    <div class="timeline-col">
+      <h3>Schedule</h3>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-dot food"></div>
+          <div class="tl-time">8:00 – 8:30 AM</div>
+          <div class="tl-name">Breakfast + pack up</div>
+          <span class="tl-badge badge-food">30 min</span>
+          <div class="tl-detail">Grab breakfast at Antler Lodge or a Gardiner coffee spot. Check out and load the car. Short drive south into the park to Mammoth.</div>
+        </div>
+
+        <div class="tl-drive">
+          <div class="tl-drive-line"></div>
+          <span class="tl-drive-label">~5 min south from Gardiner → Mammoth Hot Springs</span>
+          <div class="tl-drive-line"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot gold"></div>
+          <div class="tl-time">8:45 – 10:30 AM</div>
+          <div class="tl-name">Mammoth Hot Springs Terraces</div>
+          <span class="tl-badge badge-golden">~1.75 hrs · last big wow</span>
+          <div class="tl-detail">Lower Terraces boardwalk first — Palette Spring, Liberty Cap, and the active travertine formations (~45 min). Then Upper Terrace Drive loop for the elevated overlooks and quieter pools (~45 min). Morning light makes the orange-white terraces glow. Elk are often grazing right on the boardwalk.</div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot food"></div>
+          <div class="tl-time">10:30 – 11:15 AM</div>
+          <div class="tl-name">Lunch to-go — Mammoth Terrace Grill</div>
+          <span class="tl-badge badge-food">~45 min</span>
+          <div class="tl-detail">Pick up boxed lunches or wraps from the Terrace Grill quick-service window. Eat in the car heading north — the Paradise Valley drive along the Yellowstone River is stunning anyway.</div>
+        </div>
+
+        <div class="tl-drive">
+          <div class="tl-drive-line"></div>
+          <span class="tl-drive-label">~5 min north — Mammoth → Gardiner (North Entrance)</span>
+          <div class="tl-drive-line"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot warn"></div>
+          <div class="tl-time">12:30 PM</div>
+          <div class="tl-name">Depart Gardiner — hard cutoff</div>
+          <span class="tl-badge badge-warn">do not delay</span>
+          <div class="tl-detail">Through the Roosevelt Arch and north on US-89 through Paradise Valley. Yellowstone River views the whole way. Livingston is your gas stop ~45 min in. Beautiful final drive through Montana ranch country.</div>
+        </div>
+
+        <div class="tl-drive">
+          <div class="tl-drive-line"></div>
+          <span class="tl-drive-label">~1 hr 20 min north — Gardiner → Livingston → Bozeman (BZN)</span>
+          <div class="tl-drive-line"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot sleep"></div>
+          <div class="tl-time">1:50 – 2:10 PM</div>
+          <div class="tl-name">Bozeman Yellowstone International Airport (BZN)</div>
+          <span class="tl-badge badge-drive">return rental + check in</span>
+          <div class="tl-detail">Return rental car and check in. ~2 hr buffer before 4:29 PM flight. BZN has a great terminal with mountain views and good food options. Spend a few minutes in Livingston for gas and a stretch en route — it's a classic Montana railroad town.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="map-col">
+      <div class="route-map-wrap">
+        <h3>Day 4 Route</h3>
+        <svg class="route-svg" viewBox="0 0 460 220" xmlns="http://www.w3.org/2000/svg">
+          <defs><marker id="arr4" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="rgba(201,168,76,0.7)"/></marker></defs>
+          <!-- Route: Mammoth → Gardiner → Livingston → Bozeman -->
+          <path d="M65,185 L65,150 L200,100 L340,60 L425,45" stroke="rgba(201,168,76,0.35)" stroke-width="1.5" fill="none" stroke-dasharray="6,4" marker-end="url(#arr4)"/>
+          <!-- Mammoth Hot Springs (brief visit) -->
+          <circle cx="65" cy="185" r="7" fill="rgba(50,100,180,0.2)" stroke="#7EB3E8" stroke-width="1.5"/>
+          <text x="65" y="201" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="8" font-family="Jost,sans-serif">Mammoth</text>
+          <text x="65" y="211" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="8" font-family="Jost,sans-serif">Hot Springs</text>
+          <text x="65" y="170" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7.5" font-family="Jost,sans-serif">8:30 AM</text>
+          <!-- Gardiner (exit park) -->
+          <circle cx="65" cy="150" r="7" fill="rgba(45,74,62,0.35)" stroke="#7DB89A" stroke-width="1.5"/>
+          <text x="65" y="136" text-anchor="middle" fill="rgba(245,240,232,0.65)" font-size="8" font-family="Jost,sans-serif">Gardiner</text>
+          <text x="65" y="126" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7.5" font-family="Jost,sans-serif">12:30 PM</text>
+          <text x="65" y="116" text-anchor="middle" fill="rgba(180,60,40,0.8)" font-size="7" font-family="Jost,sans-serif">⚠ depart on time</text>
+          <!-- noon cutoff box -->
+          <rect x="38" cy="105" x="38" y="104" width="54" height="10" rx="2" fill="rgba(180,80,50,0.18)" stroke="#C05030" stroke-width="1"/>
+          <!-- Paradise Valley scenic drive label -->
+          <text x="135" y="148" text-anchor="middle" fill="rgba(201,168,76,0.4)" font-size="7.5" font-family="Jost,sans-serif" transform="rotate(-20,135,148)">Paradise Valley</text>
+          <!-- Livingston -->
+          <circle cx="200" cy="100" r="6" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.55)" stroke-width="1.5"/>
+          <text x="200" y="116" text-anchor="middle" fill="rgba(245,240,232,0.6)" font-size="8" font-family="Jost,sans-serif">Livingston</text>
+          <text x="200" y="87" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7.5" font-family="Jost,sans-serif">~1:50 PM</text>
+          <!-- I-90 label -->
+          <text x="290" y="90" text-anchor="middle" fill="rgba(201,168,76,0.35)" font-size="7.5" font-family="Jost,sans-serif" transform="rotate(-10,290,90)">→ I-90 West</text>
+          <!-- Bozeman Airport (BZN) -->
+          <circle cx="425" cy="45" r="9" fill="rgba(45,74,62,0.4)" stroke="#7DB89A" stroke-width="2"/>
+          <text x="425" y="30" text-anchor="middle" fill="rgba(245,240,232,0.8)" font-size="9" font-family="Jost,sans-serif">✈ BZN</text>
+          <text x="425" y="20" text-anchor="middle" fill="rgba(245,240,232,0.7)" font-size="8" font-family="Jost,sans-serif">Bozeman</text>
+          <text x="425" y="62" text-anchor="middle" fill="rgba(201,168,76,0.8)" font-size="7.5" font-family="Jost,sans-serif">3:15 PM → 4:29 PM ✈</text>
+          <!-- legend -->
+          <circle cx="20" cy="207" r="4" fill="rgba(50,100,180,0.2)" stroke="#7EB3E8" stroke-width="1.5"/><text x="30" y="211" fill="rgba(245,240,232,0.4)" font-size="8" font-family="Jost,sans-serif">Sightseeing</text>
+          <circle cx="120" cy="207" r="4" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.55)" stroke-width="1.5"/><text x="130" y="211" fill="rgba(245,240,232,0.4)" font-size="8" font-family="Jost,sans-serif">Town stop</text>
+          <circle cx="210" cy="207" r="4" fill="rgba(45,74,62,0.4)" stroke="#7DB89A" stroke-width="1.5"/><text x="220" y="211" fill="rgba(245,240,232,0.4)" font-size="8" font-family="Jost,sans-serif">Fly home</text>
+        </svg>
+      </div>
+      <div class="photo-section">
+        <h3>Highlights</h3>
+        <div class="photo-grid">
+          <div class="photo-card wide" onclick="openLightbox(this)">
+            <img src="https://images.unsplash.com/photo-1754956042879-85e1d1871a43?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Mammoth Hot Springs terraces" loading="lazy">
+            <div class="photo-caption">Mammoth Hot Springs — Palette Spring terraces</div>
+          </div>
+          <div class="photo-card" onclick="openLightbox(this)">
+            <img src="https://images.unsplash.com/photo-1572478262760-81e1fbeb4691?q=80&w=1766&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Yellowstone thermal steam" loading="lazy">
+            <div class="photo-caption">Mammoth — steaming travertine terraces</div>
+          </div>
+          <div class="photo-card" onclick="openLightbox(this)">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=600&q=85" alt="Paradise Valley Montana drive north" loading="lazy">
+            <div class="photo-caption">Paradise Valley — scenic drive to Bozeman</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Yellowstone &amp; Grand Teton · May 22–25, 2026 · Four Days in the American West &nbsp;·&nbsp; Bozeman Flight 4:29 PM May 25
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  // Day switching
+  function showDay(n) {
+    document.querySelectorAll('.day-section').forEach((s,i) => s.classList.toggle('active', i===n));
+    document.querySelectorAll('.day-nav-btn').forEach((b,i) => b.classList.toggle('active', i===n));
+    window.scrollTo({ top: document.querySelector('.day-nav').offsetTop - 1, behavior: 'smooth' });
+    setTimeout(revealItems, 300);
+  }
+
+  // Scroll-triggered timeline items
+  function revealItems() {
+    const section = document.querySelector('.day-section.active');
+    if (!section) return;
+    const items = section.querySelectorAll('.tl-item');
+    items.forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), i * 80);
+    });
+  }
+
+  // Initial reveal
+  setTimeout(revealItems, 600);
+
+  // Lightbox
+  function openLightbox(card) {
+    const img = card.querySelector('img');
+    document.getElementById('lightbox-img').src = img.src.replace('640px-', '1280px-');
+    document.getElementById('lightbox').classList.add('open');
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+</body>
+</html>
